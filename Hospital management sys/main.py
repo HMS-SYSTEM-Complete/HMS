@@ -1,6 +1,5 @@
 import json
-global patien_record
-global doctor_record
+import pandas
 class Person:
     def __init__(self,name="",age=0,id=0):
         self.__name=name
@@ -29,11 +28,13 @@ class Doctor(Person):
         except FileNotFoundError:
             with open(r"Hospital management sys\doctor_records.json","w") as file:
                 json.dump([self.to_dict()],file,indent=4)
+                print("\n")
                 print("Doctor Record added successfully!")
         else:
             data.append(self.to_dict())
             with open(r"Hospital management sys\doctor_records.json","w") as file:
                 json.dump(data,file,indent=4)
+                print("\n")
                 print("Doctor Record added successfully!")
     @staticmethod
     def show():
@@ -43,7 +44,10 @@ class Doctor(Person):
             find=False
             for doctor in doctors:
                 if doctor["ID"]==doc_id:
-                    print(doctor)
+                    data=pandas.DataFrame([doctor])
+                    print("\n")
+                    print("Doctor Record Found:\n")
+                    print(data.to_string(index=False))
                     find=True
                     break
             if find==False:
@@ -77,11 +81,13 @@ class Patient(Person):
         except FileNotFoundError:
             with open(r"Hospital management sys\patient_records.json","w") as file:
                 json.dump([self.to_dict()],file,indent=4)
+                print("\n")
                 print("Patient Record added successfully!")
         else:
             data.append(self.to_dict())
             with open(r"Hospital management sys\patient_records.json","w") as file:
                 json.dump(data,file,indent=4)
+                print("\n")
                 print("Patient Record added successfully!")
     @staticmethod
     def show():
@@ -91,7 +97,10 @@ class Patient(Person):
             find=False
             for patient in patients:
                 if patient["ID"]==patient_id:
-                    print(patient)
+                    patient_data=pandas.DataFrame([patient])
+                    print("\n")
+                    print("Patient Record Found:\n")
+                    print(patient_data.to_string(index=False))
                     find=True
                     break
             if find==False:
