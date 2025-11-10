@@ -66,7 +66,7 @@ class Patient(Person):
     def input(self):
         print("Enter Patient Details\n")
         super().input()
-        self.__disease=input(f"Enter Disease = ")
+        self.__disease=input("Enter Disease = ")
         print("Enter Doctor Details you are assigning to Patient\n")
         self.assign_doctor.input()
     def show(self):
