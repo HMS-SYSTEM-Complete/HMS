@@ -29,10 +29,12 @@ class Doctor(Person):
         except FileNotFoundError:
             with open(r"Hospital management sys\doctor_records.json","w") as file:
                 json.dump([self.to_dict()],file,indent=4)
+                print("Doctor Record added successfully!")
         else:
             data.append(self.to_dict())
             with open(r"Hospital management sys\doctor_records.json","w") as file:
                 json.dump(data,file,indent=4)
+                print("Doctor Record added successfully!")
     @staticmethod
     def show():
         doc_id=int(input("Enter doctor ID you want to show data = "))
@@ -45,7 +47,7 @@ class Doctor(Person):
                     find=True
                     break
             if find==False:
-                print("Doctor with this ID Does not exist!")
+                print("\nDoctor with this ID Does not exist!")
                     
 
         # super().show()
@@ -67,21 +69,49 @@ class Patient(Person):
         print("Enter Patient Details\n")
         super().input()
         self.__disease=input("Enter Disease = ")
-        print("Enter Doctor Details you are assigning to Patient\n")
-        self.assign_doctor.input()
-    def show(self):
-        print("Patient Details:\n")
-        super().show()
-        print(f"Disease = {self.__disease}")
-        print("Assigned Doctor Details:\n")
-        self.assign_doctor.show()
+        # print("Enter Doctor Details you are assigning to Patient\n")
+        # self.assign_doctor.input()
+        try:
+            with open(r"Hospital management sys\patient_records.json","r") as file:
+                data=json.load(file)
+        except FileNotFoundError:
+            with open(r"Hospital management sys\patient_records.json","w") as file:
+                json.dump([self.to_dict()],file,indent=4)
+                print("Patient Record added successfully!")
+        else:
+            data.append(self.to_dict())
+            with open(r"Hospital management sys\patient_records.json","w") as file:
+                json.dump(data,file,indent=4)
+                print("Patient Record added successfully!")
+    @staticmethod
+    def show():
+        patient_id=int(input("Enter Patient ID you want to show data = "))
+        with open(r"Hospital management sys\patient_records.json","r") as file:
+            patients=json.load(file)
+            find=False
+            for patient in patients:
+                if patient["ID"]==patient_id:
+                    print(patient)
+                    find=True
+                    break
+            if find==False:
+                print("\nPatient with this ID Does not exist!")
+                return
+    def to_dict(self):
+        return {
+            "Name": self._Person__name,      # Access private attributes of Person
+            "Age": self._Person__age,
+            "ID": self._Person__id,
+            "Disease": self.__disease    
+        }
 
     
 def main():
-    while(True):
+    exit=False
+    while(exit==False):
         choice=int(input("Which option you want to perform\n"
         "1.Add Doctor\n2.Add Patient\n3.Display Doctor Details"
-        "\n4.Display Patient Details\n"))
+        "\n4.Display Patient Details\n5.Exit\n"))
         match choice:
             case 1:
                 new_doctor=Doctor()
@@ -93,7 +123,10 @@ def main():
                 new_doctor=Doctor()
                 new_doctor.show()
             case 4:
-                pass
+                new_patient=Patient()
+                new_patient.show()
+            case 5:
+                exit=True
         print("\n")
 
 
