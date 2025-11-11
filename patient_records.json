@@ -1,8 +1,18 @@
 [
     {
-        "Name": "ahmad",
-        "Age": 23,
-        "ID": 1,
-        "Disease": "cough"
+        "Name": "Zain",
+        "Age": 12,
+        "ID": "ps9",
+        "Disease": "cough",
+        "Doctor": "Ali",
+        "Doctor ID": 12
+    },
+    {
+        "Name": "zahra",
+        "Age": 34,
+        "ID": "r01",
+        "Disease": "malaria",
+        "Doctor": "Ahmad",
+        "Doctor ID": "24"
     }
 ]
