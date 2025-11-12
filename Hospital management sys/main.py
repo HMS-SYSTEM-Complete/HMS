@@ -64,10 +64,6 @@ class Doctor(Person):
                     break
             if find==False:
                 print("\nDoctor with this ID Does not exist!")
-                    
-
-        # super().show()
-        # print(f"Specialization od Doctor is = {self.__specialization}")
     def to_dict(self):
         return {
             "Name": self._Person__name,      # Access private attributes of Person
@@ -169,12 +165,7 @@ class Patient(Person):
                 print("\nDoctor with this ID Does not exist!")
                 return False
             else:
-                return True
-
-
-
-
-    
+                return True    
 def main():
     exit=False
     while(exit==False):
@@ -197,7 +188,5 @@ def main():
             case 5:
                 exit=True
         print("\n")
-
-
 if __name__=="__main__":
    main()
