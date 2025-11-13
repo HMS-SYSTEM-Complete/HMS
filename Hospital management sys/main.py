@@ -22,21 +22,21 @@ class Doctor(Person):
         super().input()
         self.__specialization=input("Enter specialization of Doctor = ")
         try:
-            with open(r"Hospital management sys\doctor_records.json","r") as file:
+            with open(r"HMS\doctor_records.json","r") as file:
                 data=json.load(file)
         except FileNotFoundError:
-            with open(r"Hospital management sys\doctor_records.json","w") as file:
+            with open(r"HMS\doctor_records.json","w") as file:
                 json.dump([self.to_dict()],file,indent=4)
                 print("\n")
                 print("Doctor Record added successfully!")
         except json.JSONDecodeError:
-                with open(r"Hospital management sys\doctor_records.json","w") as file:
+                with open(r"HMS\doctor_records.json","w") as file:
                     json.dump([self.to_dict()],file,indent=4)
                     print("\n")
                     print("Doctor Record added successfully!")
         else:
             data.append(self.to_dict())
-            with open(r"Hospital management sys\doctor_records.json","w") as file:
+            with open(r"HMS\doctor_records.json","w") as file:
                 json.dump(data,file,indent=4)
                 print("\n")
                 print("Doctor Record added successfully!")
@@ -44,7 +44,7 @@ class Doctor(Person):
     def show():
         doc_id=input("Enter doctor ID you want to show data = ")
         try:
-            with open(r"Hospital management sys\doctor_records.json","r") as file:
+            with open(r"HMS\doctor_records.json","r") as file:
                 doctors=json.load(file)
         except FileNotFoundError:
             print("Record not found!")
@@ -88,16 +88,16 @@ class Patient(Person):
         # self.assign_doctor.input() 
         if check:
             try:
-                with open(r"Hospital management sys\patient_records.json","r") as file:
+                with open(r"HMS\patient_records.json","r") as file:
                     data=json.load(file)
             except FileNotFoundError:
-                with open(r"Hospital management sys\patient_records.json","w") as file:
+                with open(r"HMS\patient_records.json","w") as file:
                     json.dump([self.to_dict()],file,indent=4)
                     print("\n")
                     print("Patient Record added successfully!")
             else:   
                 data.append(self.to_dict())
-                with open(r"Hospital management sys\patient_records.json","w") as file:
+                with open(r"HMS\patient_records.json","w") as file:
                     json.dump(data,file,indent=4)
                     print("\n")
                     print("Patient Record added successfully!")
@@ -105,7 +105,7 @@ class Patient(Person):
     def show():
         patient_id=input("Enter Patient ID you want to show data = ")
         try:
-            with open(r"Hospital management sys\patient_records.json","r") as file:
+            with open(r"HMS\patient_records.json","r") as file:
                 patients=json.load(file)
         except FileNotFoundError:
             print("Record not found!")
@@ -136,7 +136,7 @@ class Patient(Person):
         }
     def assign_doctor(self):
         try:
-            with open(r"Hospital management sys\doctor_records.json","r") as file:
+            with open(r"HMS\doctor_records.json","r") as file:
                 doctors=json.load(file)
         except FileNotFoundError:
             print("No Doctors record in system!")

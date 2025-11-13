@@ -14,5 +14,13 @@
         "Disease": "malaria",
         "Doctor": "Ahmad",
         "Doctor ID": "24"
+    },
+    {
+        "Name": "Umair",
+        "Age": 20,
+        "ID": "302",
+        "Disease": "kera",
+        "Doctor": "Zain",
+        "Doctor ID": "32"
     }
 ]

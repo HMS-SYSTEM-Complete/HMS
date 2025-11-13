@@ -4,5 +4,11 @@
         "Age": 34,
         "ID": "24",
         "Specialization": "MBBS"
+    },
+    {
+        "Name": "Zain",
+        "Age": 20,
+        "ID": "32",
+        "Specialization": "Loha par"
     }
 ]
