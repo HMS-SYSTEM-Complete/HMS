@@ -71,6 +71,67 @@ class Doctor(Person):
             "ID": self._Person__id,
             "Specialization": self.__specialization    
         }
+    @staticmethod
+    def edit():
+        doc_id=input("Enter doctor ID you want to edit record = ")
+        try:
+            with open(r"HMS\doctor_records.json","r") as file:
+                data=json.load(file)
+        except FileNotFoundError:
+            print("Record not found!")
+        except json.JSONDecodeError:
+            print("Record not found!")
+        else:
+            find=False
+            for doctor in data:
+                if doctor["ID"]==doc_id:
+                    choice=int(input("Select option you want to edit\n"
+                            "1.Name\n2.Age\n3.Specialization\n"))
+                    match choice:
+                        case 1:
+                            name=input("Enter new name of Doctor = ")
+                            doctor["Name"]=name
+                            try:
+                                with open(r"HMS\patient_records.json","r") as file:
+                                    patients=json.load(file)
+                            except FileNotFoundError:
+                                pass
+                            except json.JSONDecodeError:
+                                pass
+                            else:
+                                for patient in patients:
+                                    if patient["Doctor ID"]==doc_id:
+                                        patient["Doctor"]=name
+                                        break
+                            with open(r"HMS\patient_records.json","w") as file:
+                                json.dump(patients,file,indent=4)
+                            with open(r"HMS\doctor_records.json","w") as file:
+                                json.dump(data,file,indent=4)
+                            print("")
+                            print("Record updated successfully!\n")
+
+                        case 2:
+                            age=int(input("Enter new age of Doctor = "))
+                            doctor["Age"]=age
+                            with open(r"HMS\doctor_records.json","w") as file:
+                                json.dump(data,file,indent=4)
+                            print("")
+                            print("Record updated successfully!\n")
+                        case 3:
+                            specialization=input("Enter new specialization of Doctor = ")
+                            doctor["Specialization"]=specialization
+                            with open(r"HMS\doctor_records.json","w") as file:
+                                json.dump(data,file,indent=4)
+                            print("")
+                            print("Record updated successfully!\n")
+                        case _:
+                            print("")
+                            print("Invalid choice Try Again!\n")
+                    
+                    find=True
+                    break
+            if find==False:
+                print("\nDoctor with this ID Does not exist!")
 class Patient(Person):
     def __init__(self, pname="", page=0, pid="",p_disease="",doc_name="",doc_ID="",
                 doc_age=0,doc_sp=""):
@@ -166,12 +227,89 @@ class Patient(Person):
                 return False
             else:
                 return True    
+    def edit_patient_record(self):
+        patient_id=input("Enter patient ID you want to edit record = ")
+        try:
+            with open(r"HMS\patient_records.json","r") as file:
+                data=json.load(file)
+        except FileNotFoundError:
+            print("Record not found!")
+        except json.JSONDecodeError:
+            print("Record not found!")
+        else:
+            find=False
+            for patient in data:
+                if patient["ID"]==patient_id:
+                    choice=int(input("Select option you want to edit\n"
+                            "1.Name\n2.Age\n3.Disease\n"
+                            "4.Change Doctor\n"))
+                    match choice:
+                        case 1:
+                            name=input("Enter new name of patient = ")
+                            patient["Name"]=name
+                            with open(r"HMS\patient_records.json","w") as file:
+                                json.dump(data,file,indent=4)
+                            print("")
+                            print("Record updated successfully!\n")
+
+                        case 2:
+                            age=int(input("Enter new age of patient = "))
+                            patient["Age"]=age
+                            with open(r"HMS\patient_records.json","w") as file:
+                                json.dump(data,file,indent=4)
+                            print("")
+                            print("Record updated successfully!\n")
+                        case 3:
+                            disease=input("Enter new Disease of patient = ")
+                            patient["Disease"]=disease
+                            with open(r"HMS\patient_records.json","w") as file:
+                                json.dump(data,file,indent=4)
+                            print("")
+                            print("Record updated successfully!\n")
+                        case 4:
+                            try:
+                                with open(r"HMS\doctor_records.json","r") as file:
+                                    doctors=json.load(file)
+                            except FileNotFoundError:
+                                print("No Doctors record in system!")
+                            except json.JSONDecodeError:
+                                print("Doctors are not available sorry!")
+                            else:
+                                print("\n")
+                                print("Here is the list of doctors which doctor you want to assign to patient:")
+                                doc_data=pandas.DataFrame(doctors)
+                                print("\n")
+                                print(doc_data.to_string(index=False))
+                                print("\n")
+                                doc_id=input("Enter doctor ID you want to assign to patient = ")
+                                find=False
+                                for (index,row) in doc_data.iterrows():
+                                    if row.ID==doc_id:
+                                        patient["Doctor"]=row["Name"]
+                                        patient["Doctor ID"]=row["ID"]
+                                        with open(r"HMS\patient_records.json","w") as file:
+                                            json.dump(data,file,indent=4)
+                                        print("\n")
+                                        print("Doctor Assigned successfully!")
+                                        find=True
+                                        break
+                                if  not find:
+                                    print("\nDoctor with this ID Does not exist!")
+                        case _:
+                            print("")
+                            print("Invalid choice Try Again!\n")
+                    
+                    find=True
+                    break
+            if find==False:
+                print("\nPatient with this ID Does not exist!")
 def main():
     exit=False
     while(exit==False):
         choice=int(input("Which option you want to perform\n"
         "1.Add Doctor\n2.Add Patient\n3.Display Doctor Details"
-        "\n4.Display Patient Details\n5.Exit\n"))
+        "\n4.Display Patient Details\n5.Edit Doctor record\n"
+        "6.Edit Patient record\n7.Exit\n"))
         match choice:
             case 1:
                 new_doctor=Doctor()
@@ -186,6 +324,12 @@ def main():
                 new_patient=Patient()
                 new_patient.show()
             case 5:
+                new_doctor=Doctor()
+                new_doctor.edit()
+            case 6:
+                new_patient=Patient()
+                new_patient.edit_patient_record()
+            case 7:
                 exit=True
         print("\n")
 if __name__=="__main__":

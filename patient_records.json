@@ -8,12 +8,12 @@
         "Doctor ID": 12
     },
     {
-        "Name": "zahra",
-        "Age": 34,
+        "Name": "Bibi",
+        "Age": 30,
         "ID": "r01",
-        "Disease": "malaria",
-        "Doctor": "Ahmad",
-        "Doctor ID": "24"
+        "Disease": "Epilepsy",
+        "Doctor": "Zain",
+        "Doctor ID": "32"
     },
     {
         "Name": "Umair",
@@ -22,5 +22,13 @@
         "Disease": "kera",
         "Doctor": "Zain",
         "Doctor ID": "32"
+    },
+    {
+        "Name": "Nahid",
+        "Age": 32,
+        "ID": "123",
+        "Disease": "Mental",
+        "Doctor": "Usman",
+        "Doctor ID": "23"
     }
 ]

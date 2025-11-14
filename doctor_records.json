@@ -9,6 +9,12 @@
         "Name": "Zain",
         "Age": 20,
         "ID": "32",
-        "Specialization": "Loha par"
+        "Specialization": "MBBS"
+    },
+    {
+        "Name": "Usman",
+        "Age": 34,
+        "ID": "23",
+        "Specialization": "MBBS and FCPS"
     }
 ]
