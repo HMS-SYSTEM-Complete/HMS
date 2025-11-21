@@ -132,6 +132,58 @@ class Doctor(Person):
                     break
             if find==False:
                 print("\nDoctor with this ID Does not exist!")
+    @staticmethod
+    def delete_doctor():
+        doctor_id=input("Enter Doctor ID you want to delete data = ")
+        try:
+            with open(r"HMS\doctor_records.json","r") as file:
+                doctors=json.load(file)
+        except FileNotFoundError:
+            print("Record not found!")
+            return
+        except json.JSONDecodeError:
+            print("Record not found!")
+            return
+        else:
+            find=False
+            new_doctors=[]
+            for doctor in doctors:
+                if doctor["ID"]!=doctor_id:
+                    new_doctors.append(doctor)
+                else:
+                    try:
+                        with open(r"HMS\patient_records.json","r") as file:
+                            data=json.load(file)
+                    except FileNotFoundError:
+                        print("Record not found!")
+                    except json.JSONDecodeError:
+                        print("Record not found!")
+                    else:
+                        deleted_doctors_from_patients=[]
+                        for patient in data:
+                            if patient["Doctor ID"]==doctor_id:
+                                patient["Doctor"]="Doctor Removed"
+                                patient["Doctor ID"]="NILL"
+                                deleted_doctors_from_patients.append(patient)
+                        print("\n")
+                        print("Here is the list of Patients you have to assign a new doctor:")
+                        patient_data=pandas.DataFrame(deleted_doctors_from_patients)
+                        print("\n")
+                        print(patient_data.to_string(index=False))
+                        print("\n")
+                        with open(r"HMS\patient_records.json","w") as file:
+                                json.dump(data,file,indent=4)      
+                    find=True
+            if not find:
+                print("\nDoctor with this ID Does not exist!")
+            else:
+                with open(r"HMS\doctor_records.json","w") as file:
+                    json.dump(new_doctors,file,indent=4)
+                print("")
+                print("Doctor Record Deleted Successfully!\n")
+
+#Patient Class Start
+
 class Patient(Person):
     def __init__(self, pname="", page=0, pid="",p_disease="",doc_name="",doc_ID="",
                 doc_age=0,doc_sp=""):
@@ -188,7 +240,7 @@ class Patient(Person):
                 print("\nPatient with this ID Does not exist!")
     def to_dict(self):
         return {
-            "Name": self._Person__name,      # Access private attributes of Person
+            "Name": self._Person__name,
             "Age": self._Person__age,
             "ID": self._Person__id,
             "Disease": self.__disease,
@@ -303,13 +355,41 @@ class Patient(Person):
                     break
             if find==False:
                 print("\nPatient with this ID Does not exist!")
+    @staticmethod
+    def delete_patient():
+        patient_id=input("Enter Patient ID you want to delete data = ")
+        try:
+            with open(r"HMS\patient_records.json","r") as file:
+                patients=json.load(file)
+        except FileNotFoundError:
+            print("Record not found!")
+            return
+        except json.JSONDecodeError:
+            print("Record not found!")
+            return
+        else:
+            find=False
+            new_patients=[]
+            for patient in patients:
+                if patient["ID"]!=patient_id:
+                    new_patients.append(patient)
+                else:
+                    find=True
+            if not find:
+                print("\nPatient with this ID Does not exist!")
+            else:
+                with open(r"HMS\patient_records.json","w") as file:
+                    json.dump(new_patients,file,indent=4)
+                print("")
+                print("Patient Record Deleted Successfully!\n")
 def main():
     exit=False
     while(exit==False):
         choice=int(input("Which option you want to perform\n"
         "1.Add Doctor\n2.Add Patient\n3.Display Doctor Details"
         "\n4.Display Patient Details\n5.Edit Doctor record\n"
-        "6.Edit Patient record\n7.Exit\n"))
+        "6.Edit Patient record\n7.Delete Doctor record\n" \
+        "8.Delete patient record\n9.Exit\n"))
         match choice:
             case 1:
                 new_doctor=Doctor()
@@ -330,6 +410,12 @@ def main():
                 new_patient=Patient()
                 new_patient.edit_patient_record()
             case 7:
+                new_doctor=Doctor()
+                new_doctor.delete_doctor()
+            case 8:
+                new_patient=Patient()
+                new_patient.delete_patient()
+            case 9:
                 exit=True
         print("\n")
 if __name__=="__main__":
