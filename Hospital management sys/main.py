@@ -66,7 +66,7 @@ class Doctor(Person):
                 print("\nDoctor with this ID Does not exist!")
     def to_dict(self):
         return {
-            "Name": self._Person__name,      # Access private attributes of Person
+            "Name": self._Person__name, 
             "Age": self._Person__age,
             "ID": self._Person__id,
             "Specialization": self.__specialization    
@@ -196,9 +196,6 @@ class Patient(Person):
         self.__disease=input("Enter Disease = ")
         print("\n") 
         check=self.assign_doctor()
-        # print()
-        # print("Enter Doctor Details you are assigning to Patient\n")
-        # self.assign_doctor.input() 
         if check:
             try:
                 with open(r"HMS\patient_records.json","r") as file:
